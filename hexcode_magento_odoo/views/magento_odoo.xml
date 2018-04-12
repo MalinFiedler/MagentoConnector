@@ -1,0 +1,822 @@
+<odoo>
+    <data>
+
+
+        <record id="magento_odoo_settings_tree" model="ir.ui.view">
+            <field name="name">Magento Settings</field>
+            <field name="model">magento.settings</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="url"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="magento_odoo_settings_form" model="ir.ui.view">
+            <field name="name">Settings</field>
+            <field name="model">magento.settings</field>
+            <field name="arch" type="xml">
+                <form string="Magento Settings" >
+                    <sheet>
+                        <group string="Magento">
+                            <label for="id" string="Magento Settings"/>
+                            <div>
+                                <div>
+                                    <label for="disable" />
+                                    <field name="disable" />
+                                </div>
+                                <div>
+                                    <label for="url"/>
+                                    <field name="url"/>
+                                </div>
+                                <div>
+                                    <label for="username"/>
+                                    <field name="username"/>
+                                </div>
+                                <div>
+                                    <label for="password"/>
+                                    <field name="password" password="True"/>
+                                </div>
+                            </div>
+                        </group>
+                        <notebook>
+                            <page string="Auto-Import">
+                                <group>
+                                    <label for="id" string="Categories"/>
+                                    <div>
+                                        <span>Interval Time</span>
+                                        <field name="import_categories_interval_time"/>
+                                        <span>Interval Unit</span>
+                                        <field name="import_categories_interval_units"/>
+                                        <button string="Save" type="object" name="create_cron_categories" class="oe_highlight oe_right"/>
+                                    </div>
+                                    <label for="id" string="Attributes and Values"/>
+                                    <div>
+                                        <span>Interval Time</span>
+                                        <field name="import_attributes_interval_time"/>
+                                        <span>Interval Unit</span>
+                                        <field name="import_attributes_interval_units"/>
+                                        <button string="Save" type="object" name="create_cron_attribute" class="oe_highlight oe_right"/>
+                                    </div>
+                                    <label for="id" string="Customers"/>
+                                    <div>
+                                        <span>Interval Time</span>
+                                        <field name="import_customers_interval_time"/>
+                                        <span>Interval Unit</span>
+                                        <field name="import_customers_interval_units"/>
+                                        <button string="Save" type="object" name="create_cron_customers" class="oe_highlight oe_right"/>
+                                    </div>
+                                    <label for="id" string="Products"/>
+                                    <div>
+                                        <span>Interval Time</span>
+                                        <field name="import_products_interval_time"/>
+                                        <span>Interval Unit</span>
+                                        <field name="import_products_interval_units"/>
+                                        <button string="Save" type="object" name="create_cron_products" class="oe_highlight oe_right"/>
+                                    </div>
+                                    <label for="id" string="Products Stock"/>
+                                    <div>
+                                        <span>Interval Time</span>
+                                        <field name="import_products_stock_interval_time"/>
+                                        <span>Interval Unit</span>
+                                        <field name="import_products_stock_interval_units"/>
+                                        <button string="Save" type="object" name="create_cron_products_stock" class="oe_highlight oe_right"/>
+                                    </div>
+                                    <label for="id" string="Sales Orders"/>
+                                    <div>
+                                        <span>Interval Time</span>
+                                        <field name="import_sales_orders_interval_time"/>
+                                        <span>Interval Unit</span>
+                                        <field name="import_sales_orders_interval_units"/>
+                                        <button string="Save" type="object" name="create_cron_sales_orders" class="oe_highlight oe_right"/>
+                                    </div>
+                                </group>
+                            </page>
+                            <page string="Import Settings">
+                                <group>
+                                    <group string="Sales Order">
+                                        <field name="magento_sale_order_prefix" string="Prefix"/>
+                                        <field name="magento_sale_order_status" string="Import Only Status"/>
+                                        <field name="magento_sale_order_from" string="Import Order From"/>
+                                        <field name="magento_sale_order_to" string="Import Order To"/>
+                                        <field name="magento_sale_order_from_ecommerce" string="Set From E-commerce" />
+                                    </group>
+                                    <group string="Products">
+                                        <field name="magento_product_simple_product" string="Only Simple Product"/>
+                                    </group>
+                                    <group string="Invoices">
+                                        <field name="magento_sale_order_auto_invoice" string="Sales order - Auto Invoice"/>
+                                        <field name="magento_invoice_prefix" string="Invoice Prefix"/>
+                                        <field name="magento_account_id" string="Default Account" attrs="{'required': [('magento_sale_order_auto_invoice','=',True)]}"/>
+                                        <field name="magento_company_id" string="Default Company" attrs="{'required': [('magento_sale_order_auto_invoice','=',True)]}"/>
+                                        <field name="magento_currency_id" string="Default Currency" attrs="{'required': [('magento_sale_order_auto_invoice','=',True)]}"/>
+                                        <field name="magento_journal_id" string="Default Journal" attrs="{'required': [('magento_sale_order_auto_invoice','=',True)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Export Settings">
+                                <group>
+                                    <group string="Customers">
+                                        <field name="magento_customer_email" string="Default Email"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="License">
+                                <field name="magento_licenze_key" string="License Key" required="True"/>
+                                <button name="magento_license_action" string="Validate" type="object" />
+                            </page>
+                        </notebook>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="magento_sync_log_form" model="ir.ui.view">
+            <field name="name">magento_sync_log_form</field>
+            <field name="model">magento.sync.log</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="log" attrs="{'readonly': True}"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="magento_sync_form" model="ir.ui.view">
+            <field name="name">magento_sync_form</field>
+            <field name="model">magento.sync</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div style="width: 720px; margin-left: 25px; text-align: center;">
+                            <h2>Magento Sync</h2>
+                            <!--<span>Select Store and Import In This Order</span><br/>-->
+                            <!--<label for="store_id"/>-->
+                            <!--<field name="store_ids" string="Select Store"/><br/>-->
+                        </div>
+                        <br/>
+                        <i class="fa fa-shopping-bag sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="store_magento" string="Store" class="sync_button"/>
+                        <i class="fa fa-list sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="category_magento" string="Categories" class="sync_button"/>
+                        <i class="fa fa-paint-brush sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="attribute_magento" string="Attributes/Values" class="sync_button"/>
+                        <i class="fa fa-user sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="customer_magento" string="Customers" class="sync_button"/>
+                        <br/>
+                        <i class="fa fa-users sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="customer_group_magento" string="Customers Groups" class="sync_button"/>
+                        <i class="fa fa-file-text-o sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="product_type_magento" string="Products Type" class="sync_button"/>
+                        <i class="fa fa-laptop sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="product_magento" string="Products" class="sync_button"/>
+                        <i class="fa fa-picture-o sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="product_images" string="Products Images" class="sync_button"/>
+                        <br/>
+                        <i class="fa fa-sort-numeric-desc sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="stock_magento" string="Products Stock" class="sync_button"/>
+                        <i class="fa fa-credit-card sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="sale_order_magento" string="Sales Order" class="sync_button"/>
+                        <i class="fa fa-paper-plane-o sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="invoice_magento" string="Invoice" class="sync_button"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="magento_customers_group_tree" model="ir.ui.view">
+            <field name="name">magento_customers_group_tree</field>
+            <field name="model">magento.customers.group</field>
+            <field name="arch" type="xml">
+                <tree string="Customers Group">
+                    <field name="magento_website_id" string="Website"/>
+                    <field name="magento_group_id" string="Group ID"/>
+                    <field name="magento_group_code" string="Group Name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="magento_customers_group_form" model="ir.ui.view">
+            <field name="name">magento_customers_group_form</field>
+            <field name="model">magento.customers.group</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="magento_group_id" string="Group ID"/>
+                            <field name="magento_group_code" string="Group Name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_partner_tree_inherit" model="ir.ui.view">
+            <field name="name">view_partner_tree_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='email']" position="after">
+                    <field name="magento_website_ids" />
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">view_partner_form_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']" position="after">
+                    <page string="Magento">
+                        <group>
+                            <group>
+                                <field name="magento_website_ids" string="Website"/>
+                                <field name="magento_group" string="Magento Group"/>
+                                <field name="store_id" string="Store"/>
+                                <field name="website_id" string="Website"/>
+                                <field name="mfirstname" string="FirstName"/>
+                            </group>
+                            <group>
+                                <field name="mlastname" string="Lastname"/>
+                                <field name="mpassword" string="Password" widget="password"/>
+                                <field name="mgender" string="Gender"/>
+                                <field name="mmiddlename" string="Middlename"/>
+                            </group>
+                        </group>
+                        <group>
+                            <button type="object" name="export_single_customer" string="Export Customer"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='email']" position="attributes">
+                    <attribute name="attrs">{'required':True}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="magento_categories_tree_inherit" model="ir.ui.view">
+            <field name="name">magento_categories_tree_inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_list_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='display_name']" position="after">
+                    <field name="magento_website_id" string="Website"/>
+                    <field name="store_id" string="Store ID"/>
+                    <field name="store_name" string="Store Name"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="magento_categories_form_inherit" model="ir.ui.view">
+            <field name="name">magento_categories_form_inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='first']" position="after">
+                    <group string="Magento Store">
+                        <field name="magento_website_id" string="Website"/>
+                        <field name="store_id" string="Store ID"/>
+                        <field name="store_name" string="Store Name"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="magento_export_form" model="ir.ui.view">
+            <field name="name">magento_export_form</field>
+            <field name="model">magento.sync</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div style="width: 720px; margin-left: 25px; text-align: center;">
+                            <h2>Magento Export</h2>
+                            <span>Select Store and Export In This Order</span><br/>
+                            <label for="store_id"/>
+                            <field name="store_ids" string="Select Store"/><br/>
+                        </div>
+                        <br/>
+                        <i class="fa fa-users sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="export_customer" string="Customers" class="sync_button"/>
+                        <i class="fa fa-list sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="export_product" string="Products" class="sync_button"/>
+                        <i class="fa fa-picture-o sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="export_product" string="Products Images" class="sync_button"/>
+                        <i class="fa fa-list sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="export_stock" string="Stock" class="sync_button"/>
+                        <br/>
+                        <i class="fa fa-money sync_button_image" aria-hidden="true"/>
+                        <button type="object" name="export_sale_order_status" string="Orders Status" class="sync_button"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="magento_attribute_set_tree" model="ir.ui.view">
+            <field name="name">magento_attribute_set_tree</field>
+            <field name="model">magento.attribute.set</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="magento_website_id" string="Website"/>
+                    <!--<field name="attributes_ids" string="Attributes"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_attribute_tree_inherit" model="ir.ui.view">
+            <field name="name">product_attribute_tree_inherit</field>
+            <field name="model">product.attribute</field>
+            <field name="inherit_id" ref="product.attribute_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_variant']" position="after">
+                    <field name="attribute_set_ids" string="Attribute Set"/>
+                    <field name="magento_is_unique" string="Unique"/>
+                    <field name="magento_is_required" string="Required"/>
+                    <field name="magento_is_configurable" string="Configurable"/>
+                    <field name="magento_is_searchable" string="Searchable"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_attribute_form" model="ir.ui.view">
+            <field name="name">product_attribute_form</field>
+            <field name="model">product.attribute</field>
+            <field name="inherit_id" ref="product.product_attribute_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='values_ids']" position="after">
+                    <group>
+                        <field name="attribute_set_ids" string="Attribute Set"/>
+                        <field name="magento_is_unique" string="Unique"/>
+                        <field name="magento_is_required" string="Required"/>
+                        <field name="magento_is_configurable" string="Configurable"/>
+                        <field name="magento_is_searchable" string="Searchable"/>
+                        <field name="magento_is_visible_in_advanced_search" string="Advanced Search"/>
+                        <field name="magento_is_comparable" string="Comparable"/>
+                        <field name="magento_is_used_for_promo_rules" string="Used Promo Rules"/>
+                        <field name="magento_is_visible_on_front" string="On Front"/>
+                        <field name="magento_used_in_product_listing" string="Used Product Listing"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="magento_store_form" model="ir.ui.view">
+            <field name="name">magento_store_form</field>
+            <field name="model">magento.store</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name" string="Name"/>
+                            <field name="code" string="Code"/>
+                            <field name="website_id" string="Website"/>
+                            <field name="group_id" string="Group"/>
+                            <field name="sort_order" string="Sort Order"/>
+                            <field name="is_active" string="Active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="magento_store_tree" model="ir.ui.view">
+            <field name="name">magento_store_tree</field>
+            <field name="model">magento.store</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name" string="Name"/>
+                    <field name="code" string="Code"/>
+                    <field name="website_id" string="Website"/>
+                    <field name="group_id" string="Group"/>
+                    <field name="sort_order" string="Sort Order"/>
+                    <field name="is_active" string="Active"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+            <field name="name">view_res_partner_filter_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//filter[@name='inactive']" position="after">
+                    <field name="magento_group" string="Magento Group" filter_domain="[('magento_group','ilike',self)]"/>
+                    <field name="store_id" string="Magento Store" filter_domain="[('store_id','ilike',self)]"/>
+                    <field name="mfirstname" string="Magento Firstname" filter_domain="[('mfirstname','ilike',self)]"/>
+                    <field name="mlastname" string="Magento Lastname" filter_domain="[('mlastname','ilike',self)]"/>
+                    <field name="mlastname" string="Magento Lastname" filter_domain="[('mlastname','ilike',self)]"/>
+                    <field name="mpassword" string="Magento Password" filter_domain="[('mpassword','ilike',self)]"/>
+                    <field name="mgender" string="Magento Gender" filter_domain="[('mgender','ilike',self)]"/>
+                    <field name="mmiddlename" string="Magento Middlename" filter_domain="[('mmiddlename','ilike',self)]"/>
+                    <filter string="Magento: For Export" name="magento_for_export" domain="[('magento_id','=',False)]"/>
+                    <filter string="Magento: Exported" name="magento_exported" domain="[('magento_id','!=',False)]"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_product_product_filter_inherit" model="ir.ui.view">
+            <field name="name">view_product_product_filter_inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='product_tmpl_id']" position="after">
+                    <field name="magento_weight" string="Magento Weight" filter_domain="[('magento_weight','ilike',self)]"/>
+                    <field name="magento_set" string="Magento Set" filter_domain="[('magento_set','ilike',self)]"/>
+                    <field name="magento_type" string="Magento Type" filter_domain="[('magento_type','ilike',self)]"/>
+                    <field name="magento_special_price" string="Magento Special Price" filter_domain="[('magento_special_price','ilike',self)]"/>
+                    <field name="magento_special_from_date" string="Magento Special From Date" filter_domain="[('magento_special_from_date','ilike',self)]"/>
+                    <field name="magento_special_to_date" string="Magento Special To Date" filter_domain="[('magento_special_to_date','ilike',self)]"/>
+                    <field name="magento_meta_title" string="Magento Meta Title" filter_domain="[('magento_meta_title','ilike',self)]"/>
+                    <field name="magento_meta_description" string="Magento Meta Description" filter_domain="[('magento_meta_description','ilike',self)]"/>
+                    <field name="lst_price" string="Magento Price" filter_domain="[('lst_price','ilike',self)]"/>
+                    <filter string="Magento: For Export" name="magento_for_export" domain="[('magento_id','=',False)]"/>
+                    <filter string="Magento: Exported" name="magento_exported" domain="[('magento_id','!=',False)]"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">view_order_form_inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Magento Comment">
+                        <group>
+                            <field name="magento_comment" string="Comment"/>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="product.attribute_action" model="ir.actions.act_window">
+            <field name="name">Attributes</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.attribute</field>
+            <field name="view_id" ref="product.attribute_tree_view"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+
+        <record id="mage_settings_action" model="ir.actions.act_window">
+            <field name="name">Magento Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">magento.settings</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="magento_odoo_settings_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+            </field>
+        </record>
+
+
+        <record id="mage_sync_action" model="ir.actions.act_window">
+            <field name="name">Magento Sync</field>
+            <field name="res_model">magento.sync</field>
+            <field name="view_id" ref="magento_sync_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record id="mage_sync_log_action" model="ir.actions.act_window">
+            <field name="name">Magento Log</field>
+            <field name="res_model">magento.sync.log</field>
+            <field name="res_id">1</field>
+            <field name="view_id" ref="magento_sync_log_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record id="mage_export_action" model="ir.actions.act_window">
+            <field name="name">Export Sync</field>
+            <field name="res_model">magento.sync</field>
+            <field name="view_id" ref="magento_export_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record id="mage_customers_group_action" model="ir.actions.act_window">
+            <field name="name">Customers Group</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">magento.customers.group</field>
+            <field name="view_id" ref="magento_customers_group_tree"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+
+        <record id="mage_attribute_set_action" model="ir.actions.act_window">
+            <field name="name">Attributes Set</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">magento.attribute.set</field>
+            <field name="view_id" ref="magento_attribute_set_tree"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+        <record id="mage_store_action" model="ir.actions.act_window">
+            <field name="name">Magento Store</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">magento.store</field>
+            <field name="view_id" ref="magento_store_tree"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+
+        <!--Filtro Customers Da Esportare-->
+        <record id="mage_customers_for_export_action" model="ir.actions.act_window">
+            <field name="name">Customers For Export</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{'search_default_magento_for_export': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+        <!--Filtro Customers Esportati-->
+        <record id="mage_customers_exported_action" model="ir.actions.act_window">
+            <field name="name">Customers Exported</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{'search_default_magento_exported': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+        <!--Filtro Prodotti Esportati-->
+        <record id="mage_products_exported_action" model="ir.actions.act_window">
+            <field name="name">Products Exported</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{'search_default_magento_exported': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+        <!--Filtro Prodotti Da Esportare-->
+        <record id="mage_products_for_export_action" model="ir.actions.act_window">
+            <field name="name">Products For Export</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{'search_default_magento_for_export': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+
+
+
+
+        <menuitem id="mage_menu"
+                  name="Magento"
+                  sequence="0"/>
+
+        <!-- Titoli -->
+
+        <menuitem id="mage_menu_settings"
+                  name="Magento Settings"
+                  sequence="20"
+                  parent="mage_menu"/>
+
+        <menuitem id="mage_menu_products"
+                  name="Magento Products"
+                  sequence="1"
+                  parent="mage_menu"/>
+
+        <menuitem id="mage_menu_customers"
+                  name="Magento Customers"
+                  sequence="2"
+                  parent="mage_menu"/>
+
+        <menuitem id="mage_menu_categories"
+                  name="Magento Categories"
+                  sequence="3"
+                  parent="mage_menu"/>
+
+        <menuitem id="mage_menu_attributes"
+                  name="Magento Attributes and Values"
+                  sequence="4"
+                  parent="mage_menu"/>
+
+        <menuitem id="mage_menu_sales_order"
+                  name="Magento Sales Order"
+                  sequence="5"
+                  parent="mage_menu"/>
+
+        <menuitem id="mage_menu_store"
+                  name="Magento Store"
+                  sequence="6"
+                  parent="mage_menu"/>
+
+        <!-- SubMenu -->
+
+        <menuitem id="mage_menu_customers_list"
+                  name="Customers"
+                  sequence="1"
+                  action="base.action_partner_form"
+                  parent="mage_menu_customers"/>
+
+        <menuitem id="mage_menu_customers_group_list"
+                  name="Customers Group"
+                  sequence="2"
+                  action="mage_customers_group_action"
+                  parent="mage_menu_customers"/>
+
+        <menuitem id="mage_menu_customers_for_export"
+                  name="Customers For Export"
+                  sequence="3"
+                  action="mage_customers_for_export_action"
+                  parent="mage_menu_customers"/>
+
+        <menuitem id="mage_menu_customers_exported"
+                  name="Customers Exported"
+                  sequence="4"
+                  action="mage_customers_exported_action"
+                  parent="mage_menu_customers"/>
+
+        <menuitem id="mage_menu_products_list"
+                  name="Products"
+                  sequence="1"
+                  action="product.product_template_action"
+                  parent="mage_menu_products"/>
+
+        <menuitem id="mage_menu_products_variant_list"
+                  name="Products Variant"
+                  sequence="2"
+                  action="product.product_normal_action_sell"
+                  parent="mage_menu_products"/>
+
+        <menuitem id="mage_menu_products_exported"
+                  name="Products Exported"
+                  sequence="3"
+                  action="mage_products_exported_action"
+                  parent="mage_menu_products"/>
+
+        <menuitem id="mage_menu_products_for_export"
+                  name="Products For Export"
+                  sequence="4"
+                  action="mage_products_for_export_action"
+                  parent="mage_menu_products"/>
+
+        <menuitem id="mage_menu_import_sync"
+                  name="Import Data"
+                  sequence="1"
+                  action="mage_sync_action"
+                  parent="mage_menu_settings"/>
+
+        <menuitem id="mage_menu_export_sync"
+                  name="Export Data"
+                  sequence="2"
+                  action="mage_export_action"
+                  parent="mage_menu_settings"/>
+
+        <menuitem id="mage_menu_log_sync"
+                  name="Log Import/Export"
+                  sequence="3"
+                  action="mage_sync_log_action"
+                  parent="mage_menu_settings"/>
+
+        <menuitem id="mage_menu_settings_form"
+                  name="Settings"
+                  sequence="4"
+                  action="mage_settings_action"
+                  parent="mage_menu_settings"/>
+
+        <menuitem id="mage_menu_categories_tree"
+                  name="Categories"
+                  sequence="1"
+                  action="product.product_category_action_form"
+                  parent="mage_menu_categories"/>
+
+        <menuitem id="mage_menu_attributes_set_tree"
+                  name="Attributes Set"
+                  sequence="1"
+                  action="mage_attribute_set_action"
+                  parent="mage_menu_attributes"/>
+
+        <menuitem id="mage_menu_attributes_tree"
+                  name="Attributes"
+                  sequence="2"
+                  action="product.attribute_action"
+                  parent="mage_menu_attributes"/>
+
+        <menuitem id="mage_menu_attributes_values_tree"
+                  name="Attributes Values"
+                  sequence="3"
+                  action="product.variants_action"
+                  parent="mage_menu_attributes"/>
+
+        <menuitem id="mage_menu_sales_order_form"
+                  name="Sales Order"
+                  sequence="1"
+                  action="sale.action_orders"
+                  parent="mage_menu_sales_order"/>
+
+        <menuitem id="mage_menu_quotation_form"
+                  name="Quotations"
+                  sequence="2"
+                  action="sale.action_quotations"
+                  parent="mage_menu_sales_order"/>
+
+        <menuitem id="mage_menu_invoices_form"
+                  name="Invoices"
+                  sequence="3"
+                  action="account.action_invoice_tree1"
+                  parent="mage_menu_sales_order"/>
+
+        <menuitem id="mage_menu_store_tree"
+                  name="Store"
+                  sequence="1"
+                  action="mage_store_action"
+                  parent="mage_menu_store"/>
+
+
+    </data>
+</odoo>

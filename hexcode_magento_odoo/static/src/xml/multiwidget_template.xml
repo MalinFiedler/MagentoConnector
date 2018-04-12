@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+   <t t-name="dragndropmulti_template">
+    <div t-att-style="widget.node.attrs.style" t-attf-class="oe_fileupload #{widget.node.attrs.class ? widget.node.attrs.class :''}">
+        <div class="oe_placeholder_files"/>
+        <div class="oe_add" t-if="!widget.get('effective_readonly')">
+            <!-- uploader of file -->
+            <button class="oe_attach"><span class="oe_e">'</span></button>
+            <span class='oe_attach_label'><t t-esc="widget.string"/></span>
+            <t t-call="dragndropmulti_HiddenInputFile">
+                <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
+                <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
+                <input type="hidden" name="model" t-att-value="widget.view.model"/>
+                <input type="hidden" name="id" value="0"/>
+                <input type="hidden" name="session_id" t-att-value="widget.session.session_id" t-if="widget.session.override_session"/>
+            </t>
+        </div>
+    </div>
+</t>
+
+<t t-name="dragndropmulti_template.images">
+    <div class="oe_attachments dragndrop-input" style="min-height: 100px;">
+            <t t-if="!widget.get('effective_readonly')">
+                <div class="dropfileshere">
+                    <p>Drop Files Here</p>
+                </div>
+                <ul class="sortable">
+                    <t t-foreach="values" t-as="id">
+                        <t t-set="file" t-value="widget.data[id]"/>
+                        <li t-att-id="file.id">
+                            <div class="oe_attachment" style="width: auto;">
+
+                                <span t-if="(file.upload or file.percent_loaded&lt;100)" t-attf-title="#{(file.name || file.filename) + (file.date?' \n('+file.date+')':'' )}" t-attf-name="#{file.name || file.filename}">
+                                    <span class="oe_fileuploader_in_process">...Upload in progress...</span>
+                                    <t t-raw="file.name || file.filename"/>
+                                </span>
+                                <a t-if="(!file.upload or file.percent_loaded&gt;=100)" t-att-href="file.url" t-attf-title="#{(file.name || file.filename) + (file.date?' \n('+file.date+')':'' )}">
+                                    <!--Controllo se l'allegato è un file oppure una foto
+                                        se e' un file inserisco la foto in base all'estensione-->
+                                        <t t-if="file.extension == 'pdf'">
+                                            <!--File PDF-->
+                                            <img src="/alpha_widget/static/src/img/pdf.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                        </t>
+                                        <t t-if="file.extension == 'doc'">
+                                            <!--File PDF-->
+                                            <img src="/alpha_widget/static/src/img/doc.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                        </t>
+                                        <t t-if="file.extension == 'zip'">
+                                            <!--File PDF-->
+                                            <img src="/alpha_widget/static/src/img/zip.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                        </t>
+                                        <t t-if="file.extension == 'psd'">
+                                            <!--File PDF-->
+                                            <img src="/alpha_widget/static/src/img/psd.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                        </t>
+                                        <t t-if="file.extension == 'ai'">
+                                            <!--File PDF-->
+                                            <img src="/alpha_widget/static/src/img/ai.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                        </t>
+                                        <t t-if="file.extension == 'ppt'">
+                                            <!--File PDF-->
+                                            <img src="/alpha_widget/static/src/img/ppt.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                        </t>
+                                        <t t-if="file.extension == 'xls'">
+                                            <!--File PDF-->
+                                            <img src="/alpha_widget/static/src/img/xls.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                        </t>
+                                        <t t-if="file.extension != 'pdf' and file.extension != 'doc' and file.extension != 'zip' and file.extension != 'ai' and file.extension != 'psd'
+                                        and file.extension != 'ppt' and file.extension != 'xls'">
+                                            <img t-att-src="file.url" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                        </t>
+                                </a>
+                                <t t-if="(!file.upload or file.percent_loaded&gt;=100)">
+                                    <a class="oe_right oe_delete oe_e" title="Delete this file" t-attf-data-id="#{file.id}">[</a>
+                                </t>
+                                <br/>
+                                 <p>
+                                        <t t-esc="file.name"/>
+                                    </p>
+                                <input type="text" t-att-value="file.description" class="dragndropdescription" t-att-id="file.id" placeholder="short description"/>
+
+                            </div>
+                        </li>
+                    </t>
+                </ul>
+            </t>
+            <t t-if="widget.get('effective_readonly')">
+                <div class="image_gallery"><!--Contenitore della galleria, classe utilizzata da magnific popup-->
+                    <t t-foreach="values" t-as="id">
+                        <t t-set="file" t-value="widget.data[id]"/>
+                        <div class="oe_attachment immagine_allegata"  style="width: auto;">
+                            <a t-att-href="file.url" t-attf-title="#{(file.name || file.filename) + (file.date?' \n('+file.date+')':'' )}">
+                                <!--Controllo se l'allegato è un file oppure una foto
+                                se e' un file inserisco la foto in base all'estensione-->
+                                <t t-if="file.extension == 'pdf'">
+                                    <!--File PDF-->
+                                    <img src="/alpha_widget/static/src/img/pdf.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                </t>
+                                <t t-if="file.extension == 'doc'">
+                                    <!--File PDF-->
+                                    <img src="/alpha_widget/static/src/img/doc.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                </t>
+                                <t t-if="file.extension == 'zip'">
+                                    <!--File PDF-->
+                                    <img src="/alpha_widget/static/src/img/zip.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                </t>
+                                <t t-if="file.extension == 'psd'">
+                                    <!--File PDF-->
+                                    <img src="/alpha_widget/static/src/img/psd.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                </t>
+                                <t t-if="file.extension == 'ai'">
+                                    <!--File PDF-->
+                                    <img src="/alpha_widget/static/src/img/ai.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                </t>
+                                <t t-if="file.extension == 'ppt'">
+                                    <!--File PDF-->
+                                    <img src="/alpha_widget/static/src/img/ppt.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                </t>
+                                <t t-if="file.extension == 'xls'">
+                                    <!--File PDF-->
+                                    <img src="/alpha_widget/static/src/img/xls.png" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                </t>
+                                <t t-if="file.extension != 'pdf' and file.extension != 'doc' and file.extension != 'zip' and file.extension != 'ai' and file.extension != 'psd'
+                                and file.extension != 'ppt' and file.extension != 'xls'">
+                                    <img t-att-src="file.url" style="height: 80px; width: auto; margin-left:0px; position: initial; "/>
+                                </t>
+                            </a>
+                            <br/>
+                            <p class="p_dragndropdescription">
+                                <t t-esc="file.description"/>
+                            </p>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </div>
+    <t t-if="!widget.get('effective_readonly')">
+        <div class="dragndrop-overlay"/>
+    </t>
+</t>
+
+    <t t-name="dragndropmulti_HiddenInputFile">
+    <div t-attf-class="oe_hidden_input_file #{fileupload_class or ''}" t-att-style="fileupload_style">
+        <form class="oe_form_binary_form" t-att-target="fileupload_id"
+            method="post" enctype="multipart/form-data" t-att-action="fileupload_action || '/web/binary/upload'">
+            <input type="hidden" name="session_id" value="" t-if="widget.session.override_session"/>
+            <input type="hidden" name="callback" t-att-value="fileupload_id"/>
+            <t t-raw="0"/>
+            <input type="file" class="oe_form_binary_file" multiple="multiple" name="ufile" t-if="widget.widget!='image'"/>
+            <input type="file" class="oe_form_binary_file" multiple="multiple"  name="ufile" accept="image/*" t-if="widget.widget=='image'"/>
+        </form>
+        <iframe t-att-id="fileupload_id" t-att-name="fileupload_id" style="display: none"/>
+    </div>
+</t>
+
+</templates>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="statistic_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hexcode_magento_odoo/static/src/js/imagepopup/magnific-popup.css" type="text/css" media="screen" />
+                <link rel="stylesheet" href="/hexcode_magento_odoo/static/src/css/dragndrop.css" type="text/css" />
+                <link rel="stylesheet" href="/hexcode_magento_odoo/static/src/css/magento.css" type="text/css" />
+                <script type="text/javascript" src="/hexcode_magento_odoo/static/src/js/imagepopup/jquery.magnific-popup.js"/>
+                <script type="text/javascript" src="/hexcode_magento_odoo/static/src/js/widget.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

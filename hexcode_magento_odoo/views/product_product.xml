@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+
+        <record id="product_template_form_inherit" model="ir.ui.view">
+            <field name="name">product_template_form_inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@name='notes']" position="after">
+                    <page string="Magento Images" name="magento_images">
+                        <field name="magento_images_ids" string="Images IDS" widget="multidragndrop"/>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='notes']" position="after">
+                    <page string="Magento">
+                        <group>
+                            <group>
+                                <field name="magento_website_ids" string="Website"/>
+                                <field name="magento_status" string="Status"/>
+                                <field name="magento_visibility" string="Visibility"/>
+                                <field name="magento_weight" string="Weight"/>
+                                <field name="magento_set" string="Attribute Set"/>
+                                <field name="magento_type" string="Type"/>
+                                <field name="magento_special_price" string="Special Price"/>
+                            </group>
+                            <group>
+                                <field name="magento_special_from_date" string="Special From"/>
+                                <field name="magento_special_to_date" string="Special To"/>
+                                <field name="magento_meta_title" string="Meta Title"/>
+                                <field name="magento_meta_keyword" string="Meta Keyword"/>
+                                <field name="magento_meta_description" string="Meta Description"/>
+                                <field name="magento_custom_design" string="Custom Design"/>
+                            </group>
+                        </group>
+                        <group string="Categories">
+                            <field name="magento_category_ids" string="Categories"/>
+                        </group>
+                        <group string="Tier Price">
+                             <field name="magento_tier_price" string="tier">
+                                 <tree>
+                                     <field name="id" string="id"/>
+                                     <field name="customer_group" string="Customer Group"/>
+                                     <field name="qty" string="Qty"/>
+                                     <field name="cost" string="Cost" />
+                                     <field name="website" string="Website"/>
+                                     <field name="product_id" string="Product"/>
+                                 </tree>
+                             </field>
+                        </group>
+                        <group>
+                            <button type="object" name="export_update_product" string="Update Product"/><br/>
+                            <button type="object" name="export_update_stock" string="Update Stock"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record id="product_product_tree_view_inherit" model="ir.ui.view">
+            <field name="name">product_product_tree_view_inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="magento_status" string="Status"/>
+                    <field name="magento_visibility" string="Visibility"/>
+                    <field name="magento_weight" string="Weight"/>
+                    <field name="magento_special_price" string="Special Price"/>
+                    <field name="magento_website_ids" string="Website"/>
+                </field>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+.sync_button{
+    height: 165px;
+    width: 165px;
+    background-color: #e6e6e6;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sync_button span{
+    margin-top: 70px;
+    word-wrap: break-word;
+    display: -webkit-inline-box;
+}
+
+.sync_button_image{
+    font-size: 55px;
+    margin-left: 73px;
+    position: absolute;
+    margin-top: 45px;
+    color: #f47027;
+}
